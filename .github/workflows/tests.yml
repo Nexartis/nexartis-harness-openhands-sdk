@@ -11,6 +11,10 @@ permissions:
     contents: write
     pull-requests: write
 
+concurrency:
+  group: tests-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     test-directory-guard:
         name: Test directory allowlist
