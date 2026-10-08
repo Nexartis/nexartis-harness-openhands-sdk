@@ -48,6 +48,10 @@ permissions:
     pull-requests: write
     issues: write
 
+concurrency:
+  group: security-scan-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     security-scan:
         # Behavior A: always on rel-* PRs. Behavior B: the label, or manual
