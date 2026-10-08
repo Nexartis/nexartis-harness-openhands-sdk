@@ -33,6 +33,10 @@ permissions:
     contents: read
     packages: write
 
+concurrency:
+  group: server-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     build-binary-and-test:
         runs-on: ${{ matrix.os }}
