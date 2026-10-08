@@ -9,6 +9,10 @@ on:
         types: [closed]
         branches: [main]
 
+concurrency:
+  group: create-release-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     create-release:
         # Only run when a release PR is merged (not just closed)
