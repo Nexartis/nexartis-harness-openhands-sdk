@@ -14,6 +14,10 @@ defaults:
     run:
         working-directory: clients/typescript
 
+concurrency:
+  group: typescript-client-endpoint-audit-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Report divergences between handwritten Agent Server calls and the pinned
   # server's OpenAPI contract. See scripts/endpoint-audit.mjs.
