@@ -8,6 +8,10 @@ on:
     pull_request:
         branches: ['**']
 
+concurrency:
+  group: precommit-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     pre-commit:
         runs-on: ubuntu-24.04

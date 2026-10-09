@@ -16,6 +16,10 @@ permissions:
     pull-requests: write
     issues: write
 
+concurrency:
+  group: run-examples-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     test-examples:
         if: github.event.label.name == 'test-examples' || github.event_name == 'workflow_dispatch'

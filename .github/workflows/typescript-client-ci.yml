@@ -11,6 +11,10 @@ defaults:
     run:
         working-directory: clients/typescript
 
+concurrency:
+  group: typescript-client-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
     agent-server-api:
         runs-on: ubuntu-latest
